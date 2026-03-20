@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=3840">
+<title>O.R.I.O.N. — Présentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL
+   ═══════════════════════════════════════════════════════════════ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; }
+body {
+  background: #000; color: #FFF;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  width: 3840px; height: 2160px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENES
+   ═══════════════════════════════════════════════════════════════ */
+.scene {
+  position: absolute; top: 0; left: 0;
+  width: 3840px; height: 2160px;
+  opacity: 0;
+  transition: opacity 1s ease;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.scene.active { opacity: 1; }
+
+/* ═══════════════════════════════════════════════════════════════
+   PROGRESS BAR
+   ═══════════════════════════════════════════════════════════════ */
+#progress-bar {
+  position: fixed; bottom: 0; left: 0;
+  width: 3840px; height: 4px;
+  background: rgba(255,255,255,0.1);
+  z-index: 1000;
+}
+#progress-fill {
+  height: 100%; width: 0;
+  background: #E8C87A;
+  transition: width 0.1s linear;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTROLS
+   ═══════════════════════════════════════════════════════════════ */
+#controls {
+  position: fixed; bottom: 20px; right: 40px;
+  z-index: 1001; display: flex; gap: 20px;
+}
+#controls button {
+  background: none; border: none;
+  color: rgba(255,255,255,0.3);
+  font-size: 24px; cursor: pointer;
+  transition: color 0.3s;
+}
+#controls button:hover { color: rgba(255,255,255,0.7); }
+
+/* ═══════════════════════════════════════════════════════════════
+   KEYFRAMES
+   ═══════════════════════════════════════════════════════════════ */
+@keyframes fadeInLetter {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes expandLine {
+  from { width: 0; }
+  to   { width: 400px; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes crashLine {
+  0%   { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(200px); opacity: 0; }
+}
+@keyframes drawLineLeft {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+@keyframes dissolve {
+  0%   { opacity: 1; }
+  50%  { opacity: 0.4; }
+  100% { opacity: 0; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 1 — OUVERTURE
+   ═══════════════════════════════════════════════════════════════ */
+#scene-1 .title-letters { display: flex; justify-content: center; align-items: center; }
+#scene-1 .title-letters span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 160px; font-weight: 300;
+  letter-spacing: 0.3em;
+  opacity: 0;
+  animation: fadeInLetter 0.8s ease forwards;
+}
+#scene-1 .subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 36px; font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  margin-top: 60px;
+  opacity: 0;
+  min-height: 50px;
+}
+#scene-1 .gold-line {
+  height: 1px; background: #E8C87A;
+  margin-top: 50px;
+  width: 0; opacity: 0;
+}
+#scene-1 .gold-line.animate {
+  opacity: 1;
+  animation: expandLine 1.5s ease forwards;
+}
+#scene-1 .credit {
+  font-size: 24px; font-weight: 300;
+  color: #E8C87A;
+  margin-top: 50px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 2 — L'IDENTITÉ
+   ═══════════════════════════════════════════════════════════════ */
+#scene-2 .identity-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px; font-weight: 300;
+  text-align: center;
+  max-width: 2800px; line-height: 1.5;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+  margin: 30px 0;
+}
+#scene-2 .identity-text.visible {
+  opacity: 1; transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 3 — LES 3 PILIERS
+   ═══════════════════════════════════════════════════════════════ */
+#scene-3 .pillars {
+  display: flex; align-items: flex-start;
+  justify-content: center; gap: 0;
+}
+#scene-3 .pillar {
+  width: 800px; text-align: center;
+  padding: 0 60px;
+  opacity: 0; transform: translateX(-30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+#scene-3 .pillar.visible {
+  opacity: 1; transform: translateX(0);
+}
+#scene-3 .pillar .gold-top {
+  width: 80px; height: 2px;
+  background: #E8C87A;
+  margin: 0 auto 40px;
+}
+#scene-3 .pillar h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 500;
+  margin-bottom: 24px;
+}
+#scene-3 .pillar p {
+  font-size: 28px; font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.5;
+}
+#scene-3 .separator {
+  width: 1px; height: 200px;
+  background: rgba(255,255,255,0.15);
+  align-self: center;
+  margin: 0 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+#scene-3 .separator.visible { opacity: 1; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 4 — LA VISION MACRO
+   ═══════════════════════════════════════════════════════════════ */
+#scene-4 {
+  position: relative;
+}
+#scene-4::before {
+  content: "0.73 -0.12 0.45 0.89 0.33 -0.56 0.91 0.12 -0.34 0.67 0.23 -0.78 0.54 0.11 -0.45 0.88 0.37 -0.22 0.65 0.19 -0.51 0.73 -0.12 0.45 0.89 0.33 -0.56 0.91 0.12 -0.34 0.67 0.23 -0.78 0.54 0.11 -0.45 0.88 0.37 -0.22 0.65 0.19 -0.51 0.73 -0.12 0.45 0.89 0.33 -0.56 0.91 0.12 -0.34 0.67 0.23 -0.78 0.54 0.11 -0.45 0.88 0.37 -0.22 0.65 0.19 -0.51 0.73 -0.12 0.45 0.89 0.33 -0.56 0.91 0.12 -0.34 0.67 0.23 -0.78 0.54 0.11 -0.45 0.88 0.37 -0.22 0.65 0.19 -0.51 ";
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%;
+  font-size: 20px; font-family: 'Inter', sans-serif;
+  color: rgba(255,255,255,0.03);
+  word-wrap: break-word;
+  line-height: 2.5;
+  padding: 100px;
+  z-index: 0;
+  overflow: hidden;
+}
+#scene-4 .macro-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px; font-weight: 400;
+  font-style: italic;
+  text-align: center;
+  max-width: 2600px; line-height: 1.6;
+  z-index: 1;
+  min-height: 300px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 5 — LES CHIFFRES
+   ═══════════════════════════════════════════════════════════════ */
+#scene-5 .numbers-row {
+  display: flex; justify-content: center;
+  align-items: center; gap: 100px;
+}
+#scene-5 .number-block {
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+#scene-5 .number-block.visible { opacity: 1; }
+#scene-5 .number-block .value {
+  font-family: 'Inter', sans-serif;
+  font-size: 240px; font-weight: 300;
+  color: #E8C87A; line-height: 1;
+}
+#scene-5 .number-block .label {
+  font-family: 'Inter', sans-serif;
+  font-size: 28px; font-weight: 300;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-top: 30px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 6 — PERFORMANCE BACKTEST
+   ═══════════════════════════════════════════════════════════════ */
+#scene-6 .perf-title {
+  font-size: 36px; font-weight: 400;
+  color: #E8C87A; text-transform: uppercase;
+  letter-spacing: 6px; margin-bottom: 60px;
+}
+#scene-6 canvas { display: block; }
+#scene-6 .annotations {
+  margin-top: 50px; text-align: left;
+  width: 3200px; padding-left: 100px;
+}
+#scene-6 .annotation {
+  font-size: 32px; font-weight: 300;
+  margin: 16px 0;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+#scene-6 .annotation.visible { opacity: 1; }
+.green { color: #10B981; }
+.red { color: #EF4444; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 7 — PHILOSOPHIE DU RISQUE
+   ═══════════════════════════════════════════════════════════════ */
+#scene-7 .risk-text {
+  text-align: center; max-width: 2400px;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+  margin: 20px 0;
+}
+#scene-7 .risk-text.visible {
+  opacity: 1; transform: translateY(0);
+}
+#scene-7 .risk-text.t1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300;
+}
+#scene-7 .risk-text.t2,
+#scene-7 .risk-text.t3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px; font-weight: 300;
+}
+.gold { color: #E8C87A; }
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 8 — BLACK-LITTERMAN
+   ═══════════════════════════════════════════════════════════════ */
+#scene-8 .bl-title {
+  font-size: 32px; font-weight: 400;
+  color: #E8C87A; text-transform: uppercase;
+  letter-spacing: 4px; margin-bottom: 60px;
+}
+#scene-8 .bl-sub {
+  font-size: 32px; font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  margin-top: 50px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 9 — LES CRISES
+   ═══════════════════════════════════════════════════════════════ */
+#scene-9 .crisis-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px; font-style: italic;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+#scene-9 .crisis-text.visible { opacity: 1; }
+#scene-9 .crash-lines {
+  display: flex; gap: 40px;
+  margin-top: 60px; justify-content: center;
+}
+#scene-9 .crash-line {
+  width: 300px; height: 2px;
+  background: rgba(255,255,255,0.3);
+}
+#scene-9 .crash-line.falling {
+  animation: crashLine 1.5s ease-in forwards;
+}
+#scene-9 .stable-line-container {
+  width: 1200px; height: 4px;
+  margin-top: 60px; overflow: hidden;
+}
+#scene-9 .stable-line {
+  height: 100%; width: 0;
+  background: #10B981;
+  transition: width 3s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 10 — LA DURÉE
+   ═══════════════════════════════════════════════════════════════ */
+#scene-10 .duree-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px; font-weight: 300;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+#scene-10 .duree-text.visible { opacity: 1; }
+#scene-10 .white-line {
+  width: 600px; height: 1px;
+  background: #FFF; margin-top: 40px;
+  opacity: 0;
+}
+#scene-10 .white-line.dissolving {
+  animation: dissolve 2s ease forwards;
+  opacity: 1;
+}
+#scene-10 .gold-line-pulse {
+  width: 600px; height: 1px;
+  background: #E8C87A; margin-top: 40px;
+  opacity: 0;
+}
+#scene-10 .gold-line-pulse.pulsing {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 11 — SYSTÈME LIVE
+   ═══════════════════════════════════════════════════════════════ */
+#scene-11 .live-title {
+  font-size: 32px; font-weight: 400;
+  color: #E8C87A; text-transform: uppercase;
+  letter-spacing: 4px; margin-bottom: 60px;
+}
+#scene-11 .dashboard {
+  width: 2800px; height: 1200px;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex; flex-direction: column;
+  padding: 60px; position: relative;
+}
+#scene-11 .metrics {
+  display: flex; justify-content: space-around;
+  margin-bottom: 40px;
+}
+#scene-11 .metric {
+  text-align: center;
+}
+#scene-11 .metric .metric-label {
+  font-size: 24px; font-weight: 300;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 3px; margin-bottom: 16px;
+}
+#scene-11 .metric .metric-value {
+  font-size: 64px; font-weight: 300;
+}
+#scene-11 .regime-badge {
+  position: absolute; top: 60px; right: 60px;
+  font-size: 20px; font-weight: 400;
+  color: #10B981;
+  border: 1px solid #10B981;
+  padding: 10px 24px;
+  letter-spacing: 3px;
+}
+#scene-11 .chart-area {
+  flex: 1; position: relative;
+}
+#scene-11 .ticker-bar {
+  height: 50px; overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin-top: auto;
+}
+#scene-11 .ticker-content {
+  display: flex; gap: 80px;
+  white-space: nowrap;
+  font-size: 22px; font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  line-height: 50px;
+  animation: tickerScroll 20s linear infinite;
+}
+#scene-11 .live-sub {
+  margin-top: 40px; text-align: center;
+  opacity: 0; transition: opacity 1s ease;
+}
+#scene-11 .live-sub p {
+  font-size: 28px; font-weight: 300;
+  margin: 8px 0;
+}
+#scene-11 .live-sub p:last-child {
+  color: rgba(255,255,255,0.5);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 12 — CONCLUSION
+   ═══════════════════════════════════════════════════════════════ */
+#scene-12 .finale-item {
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+  margin: 20px 0;
+}
+#scene-12 .finale-item.visible { opacity: 1; }
+#scene-12 .finale-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 120px; font-weight: 300;
+  letter-spacing: 0.3em;
+}
+#scene-12 .finale-gold-line {
+  width: 200px; height: 1px;
+  background: #E8C87A;
+  margin: 0 auto;
+}
+#scene-12 .finale-company {
+  font-size: 32px; color: #E8C87A;
+  letter-spacing: 6px;
+}
+#scene-12 .finale-name {
+  font-size: 28px; font-weight: 300;
+}
+#scene-12 .finale-year {
+  font-size: 48px; font-weight: 300;
+  color: rgba(255,255,255,0.3);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 1 — OUVERTURE
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-1">
+  <div class="title-letters">
+    <span style="animation-delay:0s">O</span>
+    <span style="animation-delay:0.3s">&nbsp;·&nbsp;</span>
+    <span style="animation-delay:0.6s">R</span>
+    <span style="animation-delay:0.9s">&nbsp;·&nbsp;</span>
+    <span style="animation-delay:1.2s">I</span>
+    <span style="animation-delay:1.5s">&nbsp;·&nbsp;</span>
+    <span style="animation-delay:1.8s">O</span>
+    <span style="animation-delay:2.1s">&nbsp;·&nbsp;</span>
+    <span style="animation-delay:2.4s">N</span>
+  </div>
+  <div class="subtitle" id="subtitle-1"></div>
+  <div class="gold-line" id="gold-line-1"></div>
+  <div class="credit" id="credit-1">RedRock Capital — Baptiste de Romanet de Beaune</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 2 — L'IDENTITÉ
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-2">
+  <div class="identity-text" id="id-text-1">Ce projet n'est pas une plateforme de trading, ni un algorithme parmi d'autres.</div>
+  <div class="identity-text" id="id-text-2">C'est une architecture cognitive.</div>
+  <div class="identity-text" id="id-text-3">Une entité de compréhension et d'action capable d'observer le monde économique dans sa totalité.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 3 — LES 3 PILIERS
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-3">
+  <div class="pillars">
+    <div class="pillar" id="pillar-1">
+      <div class="gold-top"></div>
+      <h3>Macroéconomie</h3>
+      <p>Cycles, taux, banques centrales — le contexte avant la décision</p>
+    </div>
+    <div class="separator" id="sep-1"></div>
+    <div class="pillar" id="pillar-2">
+      <div class="gold-top"></div>
+      <h3>Science des données</h3>
+      <p>18 indicateurs, 35 actifs, corrélations dynamiques</p>
+    </div>
+    <div class="separator" id="sep-2"></div>
+    <div class="pillar" id="pillar-3">
+      <div class="gold-top"></div>
+      <h3>Ingénierie financière</h3>
+      <p>Black-Litterman, CVaR, sizing adaptatif par régime</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 4 — LA VISION MACRO
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-4">
+  <div class="macro-text" id="macro-text"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 5 — LES CHIFFRES
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-5">
+  <div class="numbers-row">
+    <div class="number-block" id="num-1">
+      <div class="value" id="val-1">0</div>
+      <div class="label">ACTIFS COUVERTS</div>
+    </div>
+    <div class="number-block" id="num-2">
+      <div class="value" id="val-2">0</div>
+      <div class="label">ANNÉES DE DONNÉES</div>
+    </div>
+    <div class="number-block" id="num-3">
+      <div class="value" id="val-3">0</div>
+      <div class="label">SCÉNARIOS DE STRESS</div>
+    </div>
+    <div class="number-block" id="num-4">
+      <div class="value" id="val-4">0</div>
+      <div class="label">RÉGIMES DÉTECTÉS</div>
+    </div>
+    <div class="number-block" id="num-5">
+      <div class="value" id="val-5">0</div>
+      <div class="label">SYSTÈME AUTONOME</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 6 — PERFORMANCE BACKTEST
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-6">
+  <div class="perf-title">PERFORMANCE HISTORIQUE 2005 — 2026</div>
+  <canvas id="equity-canvas" width="3200" height="1000"></canvas>
+  <div class="annotations">
+    <div class="annotation" id="annot-1">Crise 2008 : O.R.I.O.N. <span class="green">+17%</span> | S&amp;P 500 <span class="red">−40%</span></div>
+    <div class="annotation" id="annot-2">COVID 2020 : O.R.I.O.N. <span class="green">+7%</span> | S&amp;P 500 <span class="red">−5%</span></div>
+    <div class="annotation" id="annot-3">Inflation 2022 : O.R.I.O.N. <span class="green">+5%</span> | S&amp;P 500 <span class="red">−20%</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 7 — PHILOSOPHIE DU RISQUE
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-7">
+  <div class="risk-text t1" id="risk-1">L'infrastructure repose sur une discipline fondamentale :</div>
+  <div class="risk-text t2" id="risk-2">Le <span class="gold">risque calculé</span> — non pas comme contrainte,</div>
+  <div class="risk-text t3" id="risk-3">mais comme <span class="gold">matière première</span> de la performance.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 8 — BLACK-LITTERMAN
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-8">
+  <div class="bl-title">ALLOCATION OPTIMALE — BLACK-LITTERMAN</div>
+  <canvas id="radar-canvas" width="1200" height="1200"></canvas>
+  <div class="bl-sub" id="bl-sub">Rééquilibrage dynamique toutes les 15 minutes</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 9 — LES CRISES
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-9">
+  <div class="crisis-text" id="crisis-1">Là où les modèles tentent de prévoir,</div>
+  <div class="crash-lines" id="crash-lines">
+    <div class="crash-line" id="cl-1"></div>
+    <div class="crash-line" id="cl-2"></div>
+    <div class="crash-line" id="cl-3"></div>
+    <div class="crash-line" id="cl-4"></div>
+    <div class="crash-line" id="cl-5"></div>
+  </div>
+  <div class="crisis-text" id="crisis-2" style="font-style:normal; font-weight:400;">O.R.I.O.N. cherche à comprendre.</div>
+  <div class="stable-line-container">
+    <div class="stable-line" id="stable-line"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 10 — LA DURÉE
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-10">
+  <div class="duree-text" id="duree-1">Là où la finance actuelle s'éteint dans la vitesse,</div>
+  <div class="white-line" id="white-line"></div>
+  <div class="duree-text" id="duree-2">O.R.I.O.N. s'érigera dans la <strong>durée</strong>.</div>
+  <div class="gold-line-pulse" id="gold-pulse"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 11 — SYSTÈME LIVE
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-11">
+  <div class="live-title">SYSTÈME OPÉRATIONNEL — EN TEMPS RÉEL</div>
+  <div class="dashboard">
+    <div class="regime-badge">RÉGIME EXPANSION</div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="metric-label">Capital</div>
+        <div class="metric-value">10 000 €</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">P&amp;L</div>
+        <div class="metric-value green">+342 €</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Drawdown</div>
+        <div class="metric-value">2.1%</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Positions</div>
+        <div class="metric-value">4</div>
+      </div>
+    </div>
+    <div class="chart-area">
+      <canvas id="live-canvas" width="2680" height="600"></canvas>
+    </div>
+    <div class="ticker-bar">
+      <div class="ticker-content">
+        <span>EUR/USD 1.0842 <span class="green">+0.12%</span></span>
+        <span>Or 2 341.50 <span class="green">+0.45%</span></span>
+        <span>Pétrole 78.23 <span class="red">−0.33%</span></span>
+        <span>S&P 500 5 892.10 <span class="green">+0.67%</span></span>
+        <span>DAX 18 234.00 <span class="green">+0.21%</span></span>
+        <span>Bitcoin 94 210 <span class="red">−1.12%</span></span>
+        <span>USD/CHF 0.8812 <span class="red">−0.08%</span></span>
+        <span>CAC 40 8 102.33 <span class="green">+0.34%</span></span>
+        <!-- Duplicate for seamless scroll -->
+        <span>EUR/USD 1.0842 <span class="green">+0.12%</span></span>
+        <span>Or 2 341.50 <span class="green">+0.45%</span></span>
+        <span>Pétrole 78.23 <span class="red">−0.33%</span></span>
+        <span>S&P 500 5 892.10 <span class="green">+0.67%</span></span>
+        <span>DAX 18 234.00 <span class="green">+0.21%</span></span>
+        <span>Bitcoin 94 210 <span class="red">−1.12%</span></span>
+        <span>USD/CHF 0.8812 <span class="red">−0.08%</span></span>
+        <span>CAC 40 8 102.33 <span class="green">+0.34%</span></span>
+      </div>
+    </div>
+  </div>
+  <div class="live-sub" id="live-sub">
+    <p>35 actifs sous surveillance permanente.</p>
+    <p>Intelligence adaptative. Décisions autonomes.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     SCENE 12 — CONCLUSION
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="scene" id="scene-12">
+  <div class="finale-item" id="fin-1"><div class="finale-title">O · R · I · O · N</div></div>
+  <div class="finale-item" id="fin-2"><div class="finale-gold-line"></div></div>
+  <div class="finale-item" id="fin-3"><div class="finale-company">REDROCK CAPITAL</div></div>
+  <div class="finale-item" id="fin-4"><div class="finale-name">Baptiste de Romanet de Beaune</div></div>
+  <div class="finale-item" id="fin-5"><div class="finale-year">2026</div></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PROGRESS BAR & CONTROLS
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="progress-bar"><div id="progress-fill"></div></div>
+<div id="controls">
+  <button id="btn-play" onclick="togglePause()">❚❚</button>
+  <button onclick="document.documentElement.requestFullscreen()">⛶</button>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   SCENE SYSTEM
+   ═══════════════════════════════════════════════════════════════ */
+const scenes = [
+  { id: 'scene-1',  duration: 8000  },
+  { id: 'scene-2',  duration: 10000 },
+  { id: 'scene-3',  duration: 8000  },
+  { id: 'scene-4',  duration: 10000 },
+  { id: 'scene-5',  duration: 12000 },
+  { id: 'scene-6',  duration: 15000 },
+  { id: 'scene-7',  duration: 10000 },
+  { id: 'scene-8',  duration: 12000 },
+  { id: 'scene-9',  duration: 10000 },
+  { id: 'scene-10', duration: 8000  },
+  { id: 'scene-11', duration: 10000 },
+  { id: 'scene-12', duration: 8000  },
+];
+
+const TRANSITION_TIME = 1000;
+const totalDuration = scenes.reduce((s, sc) => s + sc.duration + TRANSITION_TIME, 0) + TRANSITION_TIME;
+
+let currentScene = 0;
+let paused = false;
+let globalStart = Date.now();
+let sceneTimeout = null;
+let sceneStartCallbacks = {};
+
+/* ─── PROGRESS BAR ─── */
+const progressFill = document.getElementById('progress-fill');
+let elapsed = 0;
+function updateProgress() {
+  if (!paused) {
+    elapsed = Date.now() - globalStart;
+    const pct = Math.min(100, (elapsed / totalDuration) * 100);
+    progressFill.style.width = pct + '%';
+  }
+  requestAnimationFrame(updateProgress);
+}
+requestAnimationFrame(updateProgress);
+
+/* ─── PLAY / PAUSE ─── */
+let pauseTime = 0;
+function togglePause() {
+  paused = !paused;
+  document.getElementById('btn-play').textContent = paused ? '▶' : '❚❚';
+  if (paused) {
+    pauseTime = Date.now();
+    clearTimeout(sceneTimeout);
+  } else {
+    const delta = Date.now() - pauseTime;
+    globalStart += delta;
+    // Re-schedule remaining time for current scene
+    const sceneEl = document.getElementById(scenes[currentScene].id);
+    if (sceneEl.classList.contains('active')) {
+      const sceneEntered = parseFloat(sceneEl.dataset.enteredAt || Date.now());
+      const alreadyPlayed = pauseTime - sceneEntered;
+      const remaining = scenes[currentScene].duration - alreadyPlayed + TRANSITION_TIME;
+      scheduleNext(Math.max(100, remaining));
+    }
+  }
+}
+
+function scheduleNext(delay) {
+  sceneTimeout = setTimeout(() => {
+    if (paused) return;
+    nextScene();
+  }, delay);
+}
+
+function playScene(index) {
+  if (index >= scenes.length) {
+    // Final fade to black
+    const prev = document.getElementById(scenes[scenes.length - 1].id);
+    prev.classList.remove('active');
+    return;
+  }
+  const el = document.getElementById(scenes[index].id);
+  el.classList.add('active');
+  el.dataset.enteredAt = Date.now();
+
+  // Trigger scene-specific animations
+  if (sceneStartCallbacks[scenes[index].id]) {
+    sceneStartCallbacks[scenes[index].id]();
+  }
+
+  scheduleNext(scenes[index].duration + TRANSITION_TIME);
+}
+
+function nextScene() {
+  const prev = document.getElementById(scenes[currentScene].id);
+  prev.classList.remove('active');
+  currentScene++;
+  setTimeout(() => playScene(currentScene), 500);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UTILITY FUNCTIONS
+   ═══════════════════════════════════════════════════════════════ */
+function typewriter(element, text, speed, delay) {
+  delay = delay || 0;
+  setTimeout(() => {
+    let i = 0;
+    element.style.opacity = '1';
+    function type() {
+      if (paused) { setTimeout(type, 100); return; }
+      if (i < text.length) {
+        element.textContent += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    }
+    type();
+  }, delay);
+}
+
+function easeOutQuad(t) { return t * (2 - t); }
+
+function animateCounter(element, target, duration) {
+  const start = Date.now();
+  function tick() {
+    if (paused) { requestAnimationFrame(tick); return; }
+    const now = Date.now();
+    const progress = Math.min(1, (now - start) / duration);
+    const eased = easeOutQuad(progress);
+    element.textContent = Math.round(eased * target);
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 1 CALLBACKS
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-1'] = function() {
+  // Subtitle typewriter at 3s
+  const sub = document.getElementById('subtitle-1');
+  typewriter(sub, "Une intelligence systémique au service du capital et du temps", 40, 3000);
+
+  // Gold line at 5s
+  setTimeout(() => {
+    document.getElementById('gold-line-1').classList.add('animate');
+  }, 5000);
+
+  // Credit at 5.5s
+  setTimeout(() => {
+    document.getElementById('credit-1').style.opacity = '1';
+  }, 5500);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 2 CALLBACKS
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-2'] = function() {
+  setTimeout(() => document.getElementById('id-text-1').classList.add('visible'), 0);
+  setTimeout(() => document.getElementById('id-text-2').classList.add('visible'), 3000);
+  setTimeout(() => document.getElementById('id-text-3').classList.add('visible'), 6000);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 3 CALLBACKS
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-3'] = function() {
+  setTimeout(() => {
+    document.getElementById('pillar-1').classList.add('visible');
+  }, 0);
+  setTimeout(() => {
+    document.getElementById('sep-1').classList.add('visible');
+    document.getElementById('pillar-2').classList.add('visible');
+  }, 2000);
+  setTimeout(() => {
+    document.getElementById('sep-2').classList.add('visible');
+    document.getElementById('pillar-3').classList.add('visible');
+  }, 4000);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 4 CALLBACKS
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-4'] = function() {
+  const el = document.getElementById('macro-text');
+  typewriter(el, "Comprendre les interconnexions invisibles entre les devises, les actions, les flux de taux, les matières premières et les cycles politiques.", 50, 500);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 5 CALLBACKS
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-5'] = function() {
+  const nums = [
+    { el: 'num-1', val: 'val-1', target: 35, delay: 0 },
+    { el: 'num-2', val: 'val-2', target: 21, delay: 2000 },
+    { el: 'num-3', val: 'val-3', target: 5,  delay: 4000 },
+    { el: 'num-4', val: 'val-4', target: 3,  delay: 6000 },
+    { el: 'num-5', val: 'val-5', target: 1,  delay: 8000 },
+  ];
+  nums.forEach(n => {
+    setTimeout(() => {
+      document.getElementById(n.el).classList.add('visible');
+      animateCounter(document.getElementById(n.val), n.target, 2000);
+    }, n.delay);
+  });
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 6 — EQUITY CURVE
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-6'] = function() {
+  const canvas = document.getElementById('equity-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 3200, H = 1000;
+
+  // Synthetic ORION curve (10000 -> dips -> 7700)
+  function orionCurve(t) {
+    // t: 0..1 across 2005-2026
+    let v = 10000;
+    if (t < 0.05) v = 10000 + t * 20000;
+    else if (t < 0.15) v = 11000 + Math.sin(t * 20) * 500; // pre-crisis
+    else if (t < 0.22) v = 11700; // 2008 crisis: ORION goes UP
+    else if (t < 0.30) v = 11700 - (t - 0.22) * 5000; // slight dip after
+    else if (t < 0.45) v = 11300 + (t - 0.30) * 2000;
+    else if (t < 0.55) v = 11600 - (t - 0.45) * 8000;
+    else if (t < 0.65) v = 10800 + (t - 0.55) * 3000;
+    else if (t < 0.72) v = 11100 - (t - 0.65) * 15000;
+    else if (t < 0.80) v = 10050 + (t - 0.72) * 5000;
+    else if (t < 0.85) v = 10450 - (t - 0.80) * 30000;
+    else if (t < 0.92) v = 8950 + (t - 0.85) * 5000;
+    else v = 9300 - (t - 0.92) * 20000;
+    // Clamp and add noise
+    v = Math.max(7000, Math.min(12000, v));
+    return v;
+  }
+
+  // Synthetic S&P curve (10000 -> crash 2008 -> 55000)
+  function spCurve(t) {
+    if (t < 0.15) return 10000 + t * 30000; // rise to 14500
+    if (t < 0.22) return 14500 - (t - 0.15) * 135714; // crash to ~5000
+    if (t < 0.25) return 5000 + (t - 0.22) * 33333;
+    // Recovery
+    let base = 6000;
+    let growthT = (t - 0.25) / 0.75;
+    base = 6000 + growthT * 42000; // steady rise to ~48000
+    // COVID dip at t=0.72
+    if (t > 0.70 && t < 0.76) {
+      let dip = 1 - Math.pow((t - 0.73) / 0.03, 2);
+      if (dip > 0) base -= dip * 12000;
+    }
+    // 2022 dip at t=0.82
+    if (t > 0.80 && t < 0.87) {
+      let dip = 1 - Math.pow((t - 0.835) / 0.035, 2);
+      if (dip > 0) base -= dip * 10000;
+    }
+    return Math.max(4000, Math.min(58000, base));
+  }
+
+  // Scale functions
+  const minY = 4000, maxY = 58000;
+  function yScale(v) { return H - 60 - ((v - minY) / (maxY - minY)) * (H - 120); }
+  function xScale(t) { return 60 + t * (W - 120); }
+
+  // Generate points
+  const POINTS = 500;
+  const orionPts = [], spPts = [];
+  for (let i = 0; i <= POINTS; i++) {
+    const t = i / POINTS;
+    orionPts.push({ x: xScale(t), y: yScale(orionCurve(t)) });
+    spPts.push({ x: xScale(t), y: yScale(spCurve(t)) });
+  }
+
+  // Animate drawing
+  const drawDuration = 6000;
+  const drawStart = Date.now();
+
+  function drawFrame() {
+    const now = Date.now();
+    const progress = Math.min(1, (now - drawStart) / drawDuration);
+    const drawUpTo = Math.floor(progress * POINTS);
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid lines
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i <= 5; i++) {
+      const y = 60 + (i / 5) * (H - 120);
+      ctx.beginPath(); ctx.moveTo(60, y); ctx.lineTo(W - 60, y); ctx.stroke();
+    }
+
+    // Year labels
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.font = '22px Inter';
+    const years = [2005, 2008, 2010, 2012, 2014, 2016, 2018, 2020, 2022, 2024, 2026];
+    years.forEach(y => {
+      const t = (y - 2005) / 21;
+      ctx.fillText(y.toString(), xScale(t) - 20, H - 20);
+    });
+
+    // S&P line (gray dashed)
+    if (drawUpTo > 1) {
+      ctx.setLineDash([10, 8]);
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(spPts[0].x, spPts[0].y);
+      for (let i = 1; i <= drawUpTo; i++) {
+        ctx.lineTo(spPts[i].x, spPts[i].y);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // ORION line (green with glow)
+    if (drawUpTo > 1) {
+      ctx.shadowColor = '#10B981';
+      ctx.shadowBlur = 20;
+      ctx.strokeStyle = '#10B981';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(orionPts[0].x, orionPts[0].y);
+      for (let i = 1; i <= drawUpTo; i++) {
+        ctx.lineTo(orionPts[i].x, orionPts[i].y);
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+    }
+
+    // Legend
+    ctx.fillStyle = '#10B981';
+    ctx.font = '24px Inter';
+    ctx.fillText('● O.R.I.O.N.', W - 400, 40);
+    ctx.fillStyle = 'rgba(255,255,255,0.4)';
+    ctx.fillText('--- S&P 500 B&H', W - 400, 72);
+
+    if (progress < 1) requestAnimationFrame(drawFrame);
+  }
+  requestAnimationFrame(drawFrame);
+
+  // Annotations
+  setTimeout(() => document.getElementById('annot-1').classList.add('visible'), 7000);
+  setTimeout(() => document.getElementById('annot-2').classList.add('visible'), 9000);
+  setTimeout(() => document.getElementById('annot-3').classList.add('visible'), 11000);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 7 CALLBACKS
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-7'] = function() {
+  setTimeout(() => document.getElementById('risk-1').classList.add('visible'), 0);
+  setTimeout(() => document.getElementById('risk-2').classList.add('visible'), 3000);
+  setTimeout(() => document.getElementById('risk-3').classList.add('visible'), 6000);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 8 — RADAR CHART
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-8'] = function() {
+  const canvas = document.getElementById('radar-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 1200, H = 1200;
+  const cx = W / 2, cy = H / 2;
+  const R = 450;
+
+  const labels = ['EUR/USD', 'Or', 'Pétrole', 'S&P 500', 'DAX', 'Bitcoin', 'USD/CHF', 'CAC 40'];
+  const values = [0.7, 0.85, 0.5, 0.9, 0.65, 0.4, 0.55, 0.75]; // normalized 0-1
+  const n = labels.length;
+
+  const animDuration = 4000;
+  const animStart = Date.now();
+
+  function drawRadar() {
+    const now = Date.now();
+    const progress = Math.min(1, (now - animStart) / animDuration);
+    const eased = easeOutQuad(progress);
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Axis lines
+    for (let i = 0; i < n; i++) {
+      const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+      const ex = cx + Math.cos(angle) * R;
+      const ey = cy + Math.sin(angle) * R;
+      ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(ex, ey); ctx.stroke();
+
+      // Concentric rings
+      for (let r = 1; r <= 4; r++) {
+        const ringR = R * r / 4;
+        const rx = cx + Math.cos(angle) * ringR;
+        const ry = cy + Math.sin(angle) * ringR;
+        if (i === 0) {
+          ctx.beginPath();
+          for (let j = 0; j <= n; j++) {
+            const a2 = (Math.PI * 2 * j / n) - Math.PI / 2;
+            const px = cx + Math.cos(a2) * ringR;
+            const py = cy + Math.sin(a2) * ringR;
+            if (j === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+          ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+          ctx.stroke();
+        }
+      }
+
+      // Labels
+      const lx = cx + Math.cos(angle) * (R + 50);
+      const ly = cy + Math.sin(angle) * (R + 50);
+      ctx.fillStyle = '#FFF';
+      ctx.font = '24px Inter';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(labels[i], lx, ly);
+    }
+
+    // Data shape (animated from center)
+    ctx.beginPath();
+    for (let i = 0; i <= n; i++) {
+      const idx = i % n;
+      const angle = (Math.PI * 2 * idx / n) - Math.PI / 2;
+      const r = values[idx] * R * eased;
+      const px = cx + Math.cos(angle) * r;
+      const py = cy + Math.sin(angle) * r;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(232,200,122,0.15)';
+    ctx.fill();
+    ctx.strokeStyle = '#E8C87A';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Data points
+    for (let i = 0; i < n; i++) {
+      const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+      const r = values[i] * R * eased;
+      const px = cx + Math.cos(angle) * r;
+      const py = cy + Math.sin(angle) * r;
+      ctx.beginPath();
+      ctx.arc(px, py, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#E8C87A';
+      ctx.fill();
+    }
+
+    if (progress < 1) requestAnimationFrame(drawRadar);
+  }
+  requestAnimationFrame(drawRadar);
+
+  // Subtitle at 5s
+  setTimeout(() => {
+    document.getElementById('bl-sub').style.opacity = '1';
+  }, 5000);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 9 CALLBACKS
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-9'] = function() {
+  // First half: text + crashing lines
+  document.getElementById('crisis-1').classList.add('visible');
+  setTimeout(() => {
+    for (let i = 1; i <= 5; i++) {
+      const cl = document.getElementById('cl-' + i);
+      cl.style.animationDelay = (i * 0.2) + 's';
+      cl.classList.add('falling');
+    }
+  }, 2000);
+
+  // Second half
+  setTimeout(() => {
+    document.getElementById('crisis-1').classList.remove('visible');
+    document.getElementById('crash-lines').style.opacity = '0';
+    document.getElementById('crisis-2').classList.add('visible');
+    document.getElementById('stable-line').style.width = '100%';
+  }, 5000);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 10 CALLBACKS
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-10'] = function() {
+  // First half
+  document.getElementById('duree-1').classList.add('visible');
+  setTimeout(() => {
+    document.getElementById('white-line').classList.add('dissolving');
+  }, 1000);
+
+  // Second half
+  setTimeout(() => {
+    document.getElementById('duree-1').classList.remove('visible');
+    document.getElementById('white-line').style.display = 'none';
+    document.getElementById('duree-2').classList.add('visible');
+    document.getElementById('gold-pulse').classList.add('pulsing');
+  }, 4000);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 11 — LIVE DASHBOARD
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-11'] = function() {
+  const canvas = document.getElementById('live-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 2680, H = 600;
+
+  // Simple uptrending equity curve
+  const pts = [];
+  let val = 10000;
+  for (let i = 0; i <= 200; i++) {
+    val += (Math.random() - 0.42) * 30;
+    val = Math.max(9800, Math.min(10500, val));
+    pts.push(val);
+  }
+
+  const minV = Math.min(...pts) - 50;
+  const maxV = Math.max(...pts) + 50;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = 30 + (i / 4) * (H - 60);
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  // Curve
+  ctx.shadowColor = '#10B981';
+  ctx.shadowBlur = 15;
+  ctx.strokeStyle = '#10B981';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  for (let i = 0; i < pts.length; i++) {
+    const x = (i / (pts.length - 1)) * W;
+    const y = H - 30 - ((pts[i] - minV) / (maxV - minV)) * (H - 60);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.shadowBlur = 0;
+
+  // Fill under curve
+  const lastX = W;
+  const lastY = H - 30 - ((pts[pts.length - 1] - minV) / (maxV - minV)) * (H - 60);
+  ctx.lineTo(lastX, H);
+  ctx.lineTo(0, H);
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, 'rgba(16,185,129,0.15)');
+  grad.addColorStop(1, 'rgba(16,185,129,0)');
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Subtitle at 5s
+  setTimeout(() => {
+    document.getElementById('live-sub').style.opacity = '1';
+  }, 5000);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SCENE 12 CALLBACKS
+   ═══════════════════════════════════════════════════════════════ */
+sceneStartCallbacks['scene-12'] = function() {
+  for (let i = 1; i <= 5; i++) {
+    setTimeout(() => {
+      document.getElementById('fin-' + i).classList.add('visible');
+    }, i * 1000);
+  }
+
+  // Fade everything out at 6s
+  setTimeout(() => {
+    for (let i = 1; i <= 5; i++) {
+      const el = document.getElementById('fin-' + i);
+      el.style.transition = 'opacity 2s ease';
+      el.classList.remove('visible');
+    }
+  }, 6000);
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   START
+   ═══════════════════════════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  // Brief pause then start
+  setTimeout(() => {
+    globalStart = Date.now();
+    playScene(0);
+  }, 500);
+});
+</script>
+</body>
+</html>

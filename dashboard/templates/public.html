@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RedRock Capital — O.R.I.O.N.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #FFFFFF; color: #1D1D1F; font-family: 'Inter', -apple-system, sans-serif; font-size: 15px; line-height: 1.7; }
+
+.container { max-width: 900px; margin: 0 auto; padding: 0 32px; }
+
+.header { padding: 64px 0 48px; text-align: center; border-bottom: 1px solid #E5E5E7; }
+.header-brand { font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: #C8972B; margin-bottom: 8px; }
+.header-title { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: #1D1D1F; margin-bottom: 12px; letter-spacing: -0.01em; }
+.header-subtitle { font-size: 15px; color: #6E6E73; font-weight: 400; }
+
+.section { padding: 64px 0; border-bottom: 1px solid #E5E5E7; }
+.section:last-child { border-bottom: none; }
+.section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #C8972B; margin-bottom: 24px; }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; margin-bottom: 20px; }
+.section-text { color: #6E6E73; max-width: 680px; }
+
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: 32px; }
+.metric { text-align: center; }
+.metric-value { font-size: 36px; font-weight: 300; color: #1D1D1F; margin-bottom: 4px; }
+.metric-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #AEAEB2; }
+.metric-positive { color: #34C759; }
+.metric-negative { color: #FF3B30; }
+
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 32px; }
+.pillar-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500; margin-bottom: 8px; color: #1D1D1F; }
+.pillar-text { font-size: 14px; color: #6E6E73; }
+.pillar-line { width: 32px; height: 1px; background: #C8972B; margin-bottom: 16px; }
+
+.quote { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; font-style: italic; color: #1D1D1F; text-align: center; max-width: 640px; margin: 0 auto 16px; line-height: 1.5; }
+.quote-author { text-align: center; font-size: 13px; color: #C8972B; }
+.quote-role { text-align: center; font-size: 11px; color: #AEAEB2; margin-top: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+.contact-text { text-align: center; color: #6E6E73; }
+.contact-email { color: #C8972B; text-decoration: none; }
+.contact-email:hover { text-decoration: underline; }
+
+.footer { padding: 32px 0; text-align: center; font-size: 11px; color: #AEAEB2; }
+
+@media (max-width: 768px) {
+  .metrics { grid-template-columns: repeat(2, 1fr); }
+  .pillars { grid-template-columns: 1fr; }
+  .header-title { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="header">
+    <div class="header-brand">RedRock Capital</div>
+    <h1 class="header-title">O.R.I.O.N.</h1>
+    <p class="header-subtitle">Infrastructure d'Intelligence Syst&eacute;mique</p>
+  </header>
+
+  <section class="section">
+    <div class="section-label">Philosophie</div>
+    <blockquote class="quote">
+      &laquo;&nbsp;L&agrave; o&ugrave; les mod&egrave;les tentent de pr&eacute;voir, O.R.I.O.N. cherche &agrave; comprendre.&nbsp;&raquo;
+    </blockquote>
+    <div class="quote-author">Baptiste de Romanet de Beaune</div>
+    <div class="quote-role">RedRock Capital</div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Performances</div>
+    <div class="section-title">M&eacute;triques cl&eacute;s</div>
+    <div class="section-text">Donn&eacute;es mises &agrave; jour en temps r&eacute;el depuis le syst&egrave;me O.R.I.O.N.</div>
+    <div class="metrics" id="public-metrics">
+      <div class="metric"><div class="metric-value" id="pub-capital">&mdash;</div><div class="metric-label">Capital</div></div>
+      <div class="metric"><div class="metric-value" id="pub-pnl">&mdash;</div><div class="metric-label">P&amp;L Total</div></div>
+      <div class="metric"><div class="metric-value" id="pub-sharpe">&mdash;</div><div class="metric-label">Sharpe Ratio</div></div>
+      <div class="metric"><div class="metric-value" id="pub-dd">&mdash;</div><div class="metric-label">Max Drawdown</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">M&eacute;thodologie</div>
+    <div class="section-title">Trois piliers d'analyse</div>
+    <div class="pillars">
+      <div>
+        <div class="pillar-line"></div>
+        <div class="pillar-title">Macro&eacute;conomie</div>
+        <div class="pillar-text">D&eacute;tection automatique du cycle &eacute;conomique via 6 indicateurs FRED. Scores de banques centrales et analyse des divergences.</div>
+      </div>
+      <div>
+        <div class="pillar-line"></div>
+        <div class="pillar-title">Science des donn&eacute;es</div>
+        <div class="pillar-text">18 indicateurs techniques, 35 actifs multi-class, confirmation multi-timeframe, corr&eacute;lations dynamiques.</div>
+      </div>
+      <div>
+        <div class="pillar-line"></div>
+        <div class="pillar-title">Ing&eacute;nierie financi&egrave;re</div>
+        <div class="pillar-text">Optimisation Black-Litterman, simulation CVaR 5 sc&eacute;narios, r&eacute;&eacute;quilibrage dynamique adaptatif par r&eacute;gime.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label">Contact</div>
+    <div class="section-title">Demandes institutionnelles</div>
+    <p class="contact-text">
+      Pour toute demande de pr&eacute;sentation ou d'information :<br>
+      <a href="mailto:contact@redrock-capital.com" class="contact-email">contact@redrock-capital.com</a>
+    </p>
+  </section>
+
+  <footer class="footer">
+    RedRock Capital &mdash; O.R.I.O.N. v5.0<br>
+    Omniscient Risk-Integrated Orchestration Network
+  </footer>
+</div>
+
+<script>
+(function() {
+  var port = location.port;
+  if (port === '8000') { window.API_BASE = ''; }
+  else { window.API_BASE = 'http://localhost:8000'; }
+})();
+
+async function loadPublicMetrics() {
+  try {
+    var resp = await fetch(window.API_BASE + '/api/overview');
+    if (!resp.ok) throw new Error('API unavailable');
+    var d = await resp.json();
+    if (d.error) throw new Error(d.error);
+    renderPublicMetrics(d);
+  } catch (e) {
+    renderPublicMetrics({ capital: 10000, pnl_total: 0, drawdown_pct: 0 });
+  }
+}
+
+function renderPublicMetrics(d) {
+  var fmt = function(v) {
+    if (v === null || v === undefined) return '\u2014';
+    return Math.abs(v).toLocaleString('fr-FR', {maximumFractionDigits: 0}) + ' \u20ac';
+  };
+
+  document.getElementById('pub-capital').textContent = fmt(d.capital);
+
+  var pnl = d.pnl_total || 0;
+  var pnlEl = document.getElementById('pub-pnl');
+  pnlEl.textContent = (pnl >= 0 ? '+' : '-') + fmt(Math.abs(pnl));
+  pnlEl.className = 'metric-value ' + (pnl >= 0 ? 'metric-positive' : 'metric-negative');
+
+  document.getElementById('pub-sharpe').textContent = '\u2014';
+
+  var dd = d.drawdown_pct || 0;
+  document.getElementById('pub-dd').textContent = (dd * 100).toFixed(1) + '%';
+}
+
+loadPublicMetrics();
+setInterval(loadPublicMetrics, 60000);
+</script>
+</body>
+</html>
